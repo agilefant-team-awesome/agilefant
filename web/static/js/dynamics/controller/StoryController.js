@@ -414,6 +414,17 @@ StoryController.prototype.storyPointsEditable = function() {
 };
 
 /**
+ * Checks whether the story value field should be editable or not.
+ */
+StoryController.prototype.storyValueEditable = function() {
+  if (this.model.getState() === "DONE") {
+    MessageDisplay.Warning("Changing story value is not allowed for done stories");
+    return false;
+  }
+  return true;
+};
+
+/**
  * 
  */
 (function() {
