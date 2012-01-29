@@ -38,7 +38,7 @@ import fi.hut.soberit.agilefant.transfer.IterationMetrics;
 import fi.hut.soberit.agilefant.transfer.IterationTO;
 import fi.hut.soberit.agilefant.transfer.StoryTO;
 import fi.hut.soberit.agilefant.util.StoryMetrics;
-import fi.hut.soberit.agilefant.business.impl.SheetStyles;*;
+import fi.hut.soberit.agilefant.business.impl.SheetStyles;
 
 @Service("exportIterationBusiness")
 public class ExportIterationBusinessImpl implements ExportIterationBusiness {
