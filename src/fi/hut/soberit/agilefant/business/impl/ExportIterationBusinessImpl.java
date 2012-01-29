@@ -38,6 +38,7 @@ import fi.hut.soberit.agilefant.transfer.IterationMetrics;
 import fi.hut.soberit.agilefant.transfer.IterationTO;
 import fi.hut.soberit.agilefant.transfer.StoryTO;
 import fi.hut.soberit.agilefant.util.StoryMetrics;
+import fi.hut.soberit.agilefant.business.impl.SheetStyles;
 
 @Service("exportIterationBusiness")
 public class ExportIterationBusinessImpl implements ExportIterationBusiness {
@@ -53,13 +54,6 @@ public class ExportIterationBusinessImpl implements ExportIterationBusiness {
     private static final String EL_COL = "E";
     private static final String OE_COL = "F";
     private static final String ES_COL = "G";
-
-    private class SheetStyles {
-        public CellStyle boxedBold;
-        public CellStyle boxed;
-        public CellStyle whiteRow;
-        public CellStyle greyRow;
-    }
 
     public Workbook exportIteration(int iterationId) {
         Workbook wb = new HSSFWorkbook();

@@ -3,6 +3,7 @@ package fi.hut.soberit.agilefant.business.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,12 +11,13 @@ import fi.hut.soberit.agilefant.business.RankUnderDelegate;
 import fi.hut.soberit.agilefant.business.RankingBusiness;
 import fi.hut.soberit.agilefant.model.Rankable;
 import fi.hut.soberit.agilefant.util.Pair;
+import fi.hut.soberit.agilefant.business.impl.RankDirection;;
 
 @Transactional(readOnly = true)
 @Service("rankingBusiness")
-public class RankingBusinessImpl implements RankingBusiness {
-    public enum RankDirection { TOP, UP, DOWN };
-    
+
+public class RankingBusinessImpl implements RankingBusiness {   
+  
     /**
      * Get the border values of the ranks of the rankables to shift.
      * 
