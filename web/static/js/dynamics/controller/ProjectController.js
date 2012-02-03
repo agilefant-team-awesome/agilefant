@@ -599,10 +599,6 @@ ProjectController.prototype.initializeStoryConfig = function() {
     sortCallback: DynamicsComparators.valueComparatorFactory(StoryModel.prototype.getRank)
   });
   
-  if (Configuration.isLabelsInStoryList()) {
-    config.addColumnConfiguration(1, StoryListController.columnConfig.labels);
-  }
-  
   config.addColumnConfiguration(1, {
     minWidth : 280,
     autoScale : true,
@@ -706,7 +702,12 @@ ProjectController.prototype.initializeStoryConfig = function() {
     title : "Edit",
     subViewFactory : StoryController.prototype.projectStoryActionFactory
   });
-  config.addColumnConfiguration(8, {
+  
+  if (Configuration.isLabelsInStoryList()) {
+	  config.addColumnConfiguration(8, StoryListController.columnConfig.labels);
+  }
+  
+  config.addColumnConfiguration(9, {
     columnName: "description",
     fullWidth: true,
     visible: false,
@@ -717,14 +718,14 @@ ProjectController.prototype.initializeStoryConfig = function() {
       set : StoryModel.prototype.setDescription
     }
   });
-  config.addColumnConfiguration(9, {
+  config.addColumnConfiguration(10, {
     fullWidth : true,
     visible : false,
     columnName: "details",
     subViewFactory : StoryController.prototype.storyDetailsFactory,
     delayedRender: true
   });
-  config.addColumnConfiguration(10, {
+  config.addColumnConfiguration(11, {
     columnName: "buttons",
     fullWidth : true,
     visible : false,
