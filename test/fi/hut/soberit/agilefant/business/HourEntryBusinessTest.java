@@ -14,6 +14,7 @@ import java.util.Set;
 import org.easymock.Capture;
 import org.easymock.classextension.EasyMock;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -146,11 +147,13 @@ public class HourEntryBusinessTest {
         DateTime start = new DateTime(2009,6,1,0,0,1,0);
         DateTime end = new DateTime(2009,6,7,23,59,59,0);
         List<HourEntry> entries = Collections.emptyList();
-        
+        DateTimeZone zone = DateTimeZone.forOffsetHoursMinutes(1, 0);
+        start = start.withZone(zone);
+        end = end.withZone(zone);
         expect(hourEntryDAO.getHourEntriesByFilter(start, end, 0)).andReturn(entries);
 
         replay(hourEntryDAO);
-        assertEquals(7, hourEntryBusiness.getDailySpentEffortByWeek(start.toLocalDate(), 0, 5, 0).size());
+        assertEquals(8, hourEntryBusiness.getDailySpentEffortByWeek(start.toLocalDate(), 0, 1, 0).size());
         verify(hourEntryDAO);
     }
     
@@ -201,10 +204,12 @@ public class HourEntryBusinessTest {
         entries.add(createEntry(2009, 7, 28, 70000000));
         DateTime start = new DateTime(2008,12,27,0,0,0,0);
         DateTime end = new DateTime(2009,1,3,0,0,0,0);
-        
+        DateTimeZone zone = DateTimeZone.forOffsetHoursMinutes(1, 0);
+        start = start.withZone(zone);
+        end = end.withZone(zone);
         expect(hourEntryDAO.getHourEntriesByFilter(start, end, 0)).andReturn(entries);
         replay(hourEntryDAO);
-        List<DailySpentEffort> res = hourEntryBusiness.getDailySpentEffortByInterval(start, end, 0, 5, 0);
+        List<DailySpentEffort> res = hourEntryBusiness.getDailySpentEffortByInterval(start, end, 0, 1, 0);
         assertEquals(8, res.size());
         assertEquals(null, res.get(0).getSpentEffort());
         assertEquals(1900L, (long)res.get(1).getSpentEffort());
