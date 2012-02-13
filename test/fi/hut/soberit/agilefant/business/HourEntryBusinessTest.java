@@ -14,6 +14,7 @@ import java.util.Set;
 import org.easymock.Capture;
 import org.easymock.classextension.EasyMock;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -147,6 +148,12 @@ public class HourEntryBusinessTest {
         DateTime end = new DateTime(2009,6,7,23,59,59,0);
         List<HourEntry> entries = Collections.emptyList();
         
+        int usrHourTimeZone   = 5;
+        int usrMinuteTimeZone = 0;
+        DateTimeZone zone = DateTimeZone.forOffsetHoursMinutes(usrHourTimeZone, usrMinuteTimeZone);
+        start = start.withZone(zone);
+        end   = end.withZone(zone);
+        
         expect(hourEntryDAO.getHourEntriesByFilter(start, end, 0)).andReturn(entries);
 
         replay(hourEntryDAO);
@@ -173,10 +180,19 @@ public class HourEntryBusinessTest {
         
         List<HourEntry> entries = new ArrayList<HourEntry>();
 
-        expect(hourEntryDAO.getHourEntriesByFilter(start, end, 0)).andReturn(entries);
+        // Since the start time and end time need to be updated to the browser time
+        // start time and end time should change
+        int usrHourTimeZone   = 5;
+        int usrMinuteTimeZone = 0;
+        DateTimeZone zone = DateTimeZone.forOffsetHoursMinutes(usrHourTimeZone, usrMinuteTimeZone);
+        DateTime UserStart = start.withZone(zone);
+        DateTime UserEnd   = end.withZone(zone);
+        
+        expect(hourEntryDAO.getHourEntriesByFilter(UserStart, UserEnd, 0)).andReturn(entries);
 
         replay(hourEntryDAO);
-        List<DailySpentEffort> res = hourEntryBusiness.getDailySpentEffortByInterval(start, end, 0, 5, 0);
+               
+        List<DailySpentEffort> res = hourEntryBusiness.getDailySpentEffortByInterval(start, end, 0,usrHourTimeZone, usrMinuteTimeZone);
         assertEquals(7, res.size());
         assertEquals(null, res.get(0).getSpentEffort());
         assertEquals(null, res.get(1).getSpentEffort());
@@ -230,11 +246,16 @@ public class HourEntryBusinessTest {
         DateTime start = new DateTime(2009,4,28,0,0,0,0);
         DateTime end = new DateTime(2009,5,1,23,59,0,0);
 
+        int usrHourTimeZone   = 5;
+        int usrMinuteTimeZone = 0;
+        DateTimeZone zone = DateTimeZone.forOffsetHoursMinutes(usrHourTimeZone, usrMinuteTimeZone);
+        DateTime  userstart = start.withZone(zone);
+        DateTime  userend   = end.withZone(zone);
         
-        expect(hourEntryDAO.getHourEntriesByFilter(start, end, 0)).andReturn(entries);
+        expect(hourEntryDAO.getHourEntriesByFilter(userstart, userend, 0)).andReturn(entries);
         replay(hourEntryDAO);
-        List<DailySpentEffort> res = hourEntryBusiness.getDailySpentEffortByInterval(start, end, 0, 5, 0);
-        assertEquals(4, res.size());
+        List<DailySpentEffort> res = hourEntryBusiness.getDailySpentEffortByInterval(start, end, 0, usrHourTimeZone, usrMinuteTimeZone);
+        assertEquals(5, res.size());
         assertEquals(1900L, (long)res.get(0).getSpentEffort());
         assertEquals(null, res.get(1).getSpentEffort());
         assertEquals(54000L, (long)res.get(2).getSpentEffort());
