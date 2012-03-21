@@ -21,6 +21,7 @@ $(document).ready(function() {
     createNewMenu.menuTimer('destroy');
     CreateDialog.createById($(this).attr('id'));
   });
+  
 });
 </script>
 
@@ -82,5 +83,4 @@ $(document).ready(function() {
     </li>
     
     </c:if>
-    
 </ul>
